@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="22751dc30b3f43dea3a8dc194f163cc1" Name="Diagram1">
+        <EntityTypeShape EntityType="EmployeeDetailModel.Certification" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeDetailModel.Department" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeDetailModel.Employee" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeDetailModel.Language" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeDetailModel.Organization" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeDetailModel.Region" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="EmployeeDetailModel.FK__Departmen__organ__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeDetailModel.FK__Employee__depart__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeDetailModel.FK__Organization__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeDetailModel.EmployeeCertification" ManuallyRouted="false" />
+        <AssociationConnector Association="EmployeeDetailModel.EmployeeLanguage" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,425 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDetailModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Certification">
+          <Key>
+            <PropertyRef Name="certificate" />
+          </Key>
+          <Property Name="certificate" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="departmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="departmentName" Type="varchar" MaxLength="40" />
+          <Property Name="organizationName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="40" />
+          <Property Name="lastName" Type="varchar" MaxLength="40" />
+          <Property Name="departmentID" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeCertification">
+          <Key>
+            <PropertyRef Name="employeeID" />
+            <PropertyRef Name="certificate" />
+          </Key>
+          <Property Name="employeeID" Type="int" Nullable="false" />
+          <Property Name="certificate" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeLanguage">
+          <Key>
+            <PropertyRef Name="verbalSkill" />
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="verbalSkill" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="employeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="verbalSkill" />
+          </Key>
+          <Property Name="verbalSkill" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="organizationName" />
+          </Key>
+          <Property Name="organizationName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="30" />
+          <Property Name="state" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="city" />
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="city" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="timezone" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__Departmen__organ__3B75D760">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="organizationName" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="organizationName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__depart__3E52440B">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="departmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeC__certi__49C3F6B7">
+          <End Role="Certification" Type="Self.Certification" Multiplicity="1" />
+          <End Role="EmployeeCertification" Type="Self.EmployeeCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certification">
+              <PropertyRef Name="certificate" />
+            </Principal>
+            <Dependent Role="EmployeeCertification">
+              <PropertyRef Name="certificate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeC__emplo__48CFD27E">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeCertification" Type="Self.EmployeeCertification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="EmployeeCertification">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeL__emplo__440B1D61">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeLanguage" Type="Self.EmployeeLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeID" />
+            </Principal>
+            <Dependent Role="EmployeeLanguage">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeL__verba__4316F928">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="EmployeeLanguage" Type="Self.EmployeeLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="verbalSkill" />
+            </Principal>
+            <Dependent Role="EmployeeLanguage">
+              <PropertyRef Name="verbalSkill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Organization__38996AB5">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="city" />
+              <PropertyRef Name="state" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="city" />
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeDetailModelStoreContainer">
+          <EntitySet Name="Certification" EntityType="Self.Certification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeCertification" EntityType="Self.EmployeeCertification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeLanguage" EntityType="Self.EmployeeLanguage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Departmen__organ__3B75D760" Association="Self.FK__Departmen__organ__3B75D760">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__depart__3E52440B" Association="Self.FK__Employee__depart__3E52440B">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeC__certi__49C3F6B7" Association="Self.FK__EmployeeC__certi__49C3F6B7">
+            <End Role="Certification" EntitySet="Certification" />
+            <End Role="EmployeeCertification" EntitySet="EmployeeCertification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeC__emplo__48CFD27E" Association="Self.FK__EmployeeC__emplo__48CFD27E">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeCertification" EntitySet="EmployeeCertification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeL__emplo__440B1D61" Association="Self.FK__EmployeeL__emplo__440B1D61">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeLanguage" EntitySet="EmployeeLanguage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeL__verba__4316F928" Association="Self.FK__EmployeeL__verba__4316F928">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="EmployeeLanguage" EntitySet="EmployeeLanguage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Organization__38996AB5" Association="Self.FK__Organization__38996AB5">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDetailModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Certification">
+          <Key>
+            <PropertyRef Name="certificate" />
+          </Key>
+          <Property Name="certificate" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.EmployeeCertification" FromRole="Certification" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="departmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="departmentName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="organizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK__Departmen__organ__3B75D760" FromRole="Department" ToRole="Organization" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__depart__3E52440B" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="departmentID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Employee__depart__3E52440B" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Certifications" Relationship="Self.EmployeeCertification" FromRole="Employee" ToRole="Certification" />
+          <NavigationProperty Name="Languages" Relationship="Self.EmployeeLanguage" FromRole="Employee" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="verbalSkill" />
+          </Key>
+          <Property Name="verbalSkill" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.EmployeeLanguage" FromRole="Language" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="organizationName" />
+          </Key>
+          <Property Name="organizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__organ__3B75D760" FromRole="Organization" ToRole="Department" />
+          <NavigationProperty Name="Region" Relationship="Self.FK__Organization__38996AB5" FromRole="Organization" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="city" />
+            <PropertyRef Name="state" />
+          </Key>
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="timezone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Organizations" Relationship="Self.FK__Organization__38996AB5" FromRole="Region" ToRole="Organization" />
+        </EntityType>
+        <Association Name="FK__Departmen__organ__3B75D760">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="organizationName" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="organizationName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__depart__3E52440B">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="departmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Organization__38996AB5">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="city" />
+              <PropertyRef Name="state" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="city" />
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeCertification">
+          <End Role="Certification" Type="Self.Certification" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+        </Association>
+        <Association Name="EmployeeLanguage">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="Language" Type="Self.Language" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EmployeeDetailEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Certifications" EntityType="Self.Certification" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <EntitySet Name="Organizations" EntityType="Self.Organization" />
+          <EntitySet Name="Regions" EntityType="Self.Region" />
+          <AssociationSet Name="FK__Departmen__organ__3B75D760" Association="Self.FK__Departmen__organ__3B75D760">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__depart__3E52440B" Association="Self.FK__Employee__depart__3E52440B">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Organization__38996AB5" Association="Self.FK__Organization__38996AB5">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Organization" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeCertification" Association="Self.EmployeeCertification">
+            <End Role="Certification" EntitySet="Certifications" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeLanguage" Association="Self.EmployeeLanguage">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Language" EntitySet="Languages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDetailModelStoreContainer" CdmEntityContainer="EmployeeDetailEntities">
+          <EntitySetMapping Name="Certifications">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Certification">
+              <MappingFragment StoreEntitySet="Certification">
+                <ScalarProperty Name="certificate" ColumnName="certificate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="organizationName" ColumnName="organizationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="verbalSkill" ColumnName="verbalSkill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizations">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="organizationName" ColumnName="organizationName" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="EmployeeDetailModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="timezone" ColumnName="timezone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EmployeeCertification" TypeName="EmployeeDetailModel.EmployeeCertification" StoreEntitySet="EmployeeCertification">
+            <EndProperty Name="Certification">
+              <ScalarProperty Name="certificate" ColumnName="certificate" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EmployeeLanguage" TypeName="EmployeeDetailModel.EmployeeLanguage" StoreEntitySet="EmployeeLanguage">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+            </EndProperty>
+            <EndProperty Name="Language">
+              <ScalarProperty Name="verbalSkill" ColumnName="verbalSkill" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
